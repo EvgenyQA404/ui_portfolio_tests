@@ -1,6 +1,5 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
-from seletools.actions import drag_and_drop
 import allure
 
 
@@ -14,42 +13,35 @@ class BasePage:
         self.driver.get(site)
 
     @allure.step('Нажатие на кликабельный элемент')
-    def click_on_section(self, section):
-        self.driver.find_element(*section).click()
+    def click(self, element):
+        self.driver.find_element(*element).click()
 
     @allure.step('Ожидание до видимого элемента')
-    def wait_element_located(self, element_located):
-        WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located(element_located))
+    def wait_element_located(self, element):
+        WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located(element))
 
     @allure.step('Ожидание до кликабельного элемента')
     def wait_element_clickable(self, element_clickable):
         WebDriverWait(self.driver, 30).until(expected_conditions.element_to_be_clickable(element_clickable))
 
     @allure.step('Получение текста элемента')
-    def get_text_of_element(self, text_of_element):
-        text = self.driver.find_element(*text_of_element).text
-        return text
-
-    @allure.step('Перенос элемента')
-    def drag_and_drop_element(self, source, target):
-        source = self.driver.find_element(*source)
-        target = self.driver.find_element(*target)
-        drag_and_drop(self.driver, source, target)
+    def get_text_of_element(self, text):
+        return self.driver.find_element(*text).text
 
     @allure.step('Ввод сообщения в строку input')
     def input_text(self, string, message):
         self.driver.find_element(*string).send_keys(message)
 
     @allure.step('Ожидание до видимости элемента')
-    def wait_element_will_be_visible(self, present_element, text):
+    def wait_text_in_element(self, locator, text):
         WebDriverWait(self.driver, 30).until(
-            expected_conditions.text_to_be_present_in_element(present_element, text))
+            expected_conditions.text_to_be_present_in_element(locator, text))
 
     @allure.step('Ожидание изменения элемента в тексте')
-    def wait_another_text(self, waiting_element, text):
+    def wait_another_text(self, locator, text):
         # ожидание изменения текста
         WebDriverWait(self.driver, 30).until(lambda driver: self.driver.find_element(
-            *waiting_element).text != text)
+            *locator).text != text)
         # возврат нового текста
-        new_text = self.driver.find_element(*waiting_element).text
+        new_text = self.driver.find_element(*locator).text
         return new_text

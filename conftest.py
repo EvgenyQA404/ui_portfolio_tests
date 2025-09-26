@@ -11,7 +11,7 @@ def driver():
     drv = None
     try:
         drv = webdriver.Chrome(options=options)  # путей не указываем!
-        drv.implicitly_wait(5)
+        drv.implicitly_wait(0)
         yield drv
     finally:
         if drv:
