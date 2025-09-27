@@ -1,18 +1,16 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 
-@pytest.fixture()
-def driver():
-    options = Options()
-    options.add_argument("--window-size=1920,1080")
-    # options.add_argument("--headless=new")  # если нужно без UI
-    drv = None
-    try:
-        drv = webdriver.Chrome(options=options)  # путей не указываем!
-        drv.implicitly_wait(0)
-        yield drv
-    finally:
-        if drv:
-            drv.quit()
+# подготовка окружения
+@pytest.fixture(params=['firefox', 'chrome'])
+def driver(request):
+    browser = None
+    options = webdriver.FirefoxOptions()
+    options.add_argument('--window-size=1920,1080')
+    if request.param == 'firefox':
+        browser = webdriver.Firefox(options=options)
+    elif request.param == 'chrome':
+        browser = webdriver.Chrome(options=options)
+    yield browser
+    browser.quit()

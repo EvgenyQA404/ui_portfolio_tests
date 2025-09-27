@@ -10,7 +10,7 @@ class LoginPage(BasePage):
 
     @allure.step('Переход на сайт')
     def go_to_site(self):
-        self.get_site(data.urls.site)
+        self.get_site(data.urls.SITE)
 
     @allure.step('Нажатие на кнопку Login')
     def click_button_login(self):
@@ -20,29 +20,29 @@ class LoginPage(BasePage):
     @allure.step('Ввод имени пользователя')
     def input_name_text(self):
         super().wait_element_located(self.basic.user_name)
-        super().input_text(self.basic.user_name, data.variables.name)
+        super().input_text(self.basic.user_name, data.variables.NAME)
 
     @allure.step('Ввод пароля')
     def input_password_text(self):
         super().wait_element_located(self.basic.password)
-        super().input_text(self.basic.password, data.variables.password)
+        super().input_text(self.basic.password, data.variables.PASSWORD)
 
     @allure.step('Ввод неверного имени пользователя')
     def input_bad_name_text(self):
         super().wait_element_located(self.basic.user_name)
-        super().input_text(self.basic.user_name, data.variables.bad_name)
+        super().input_text(self.basic.user_name, data.variables.BAD_NAME)
 
     @allure.step('Ввод неверного пароля')
     def input_bad_password_text(self):
         super().wait_element_located(self.basic.password)
-        super().input_text(self.basic.password, data.variables.bad_password)
-
-    @allure.step('Получение текста Dashboard')
-    def get_dashboard_title(self):
-        super().wait_element_located(self.basic.dashboard_text)
-        return super().get_text_of_element(self.basic.dashboard_text)
+        super().input_text(self.basic.password, data.variables.BAD_PASSWORD)
 
     @allure.step('Получение текста ошибки invalid_credentials')
     def get_invalid_credentials(self):
         super().wait_element_located(self.basic.invalid_credentials_msg)
         return super().get_text_of_element(self.basic.invalid_credentials_msg)
+
+    @allure.step('Получение текста Login')
+    def get_login_text(self):
+        super().wait_element_located(self.basic.login_text)
+        return super().get_text_of_element(self.basic.login_text)

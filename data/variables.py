@@ -1,12 +1,14 @@
 # имя пользователя
-name = 'Admin'
+NAME = 'Admin'
 # пароль пользователя
-password = 'admin123'
+PASSWORD = 'admin123'
 # неверное имя пользователя
-bad_name = 'BadAdmin'
+BAD_NAME = 'BadAdmin'
 # неверный пароль пользователя
-bad_password = 'Badadmin123'
+BAD_PASSWORD = 'Badadmin123'
 # текст dashboard в кабинете
-dashboard_text = 'Dashboard'
+DASHBOARD_TEXT = 'Dashboard'
 # текст с ошибкой в логине или пароле
-invalid_credentials_text = "Invalid credentials"
+INVALID_CREDENTIALS_TEXT = "Invalid credentials"
+# текст на главной странице Login
+LOGIN_TEXT_MAIN_PAGE = "Login"

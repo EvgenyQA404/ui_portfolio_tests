@@ -1,5 +1,5 @@
 import allure
-from pages.login_page import LoginPage
+from pages.dashboard_page import DashboardPage
 import data.variables
 import data.urls
 
@@ -12,22 +12,37 @@ class TestBasicFunctionality:
         'После аутентификации поиск текста "Dashboard" в личном кабинете')
     @allure.title('Успешный логин')
     def test_success_login(self, driver):
-        page = LoginPage(driver)
+        page = DashboardPage(driver)
         page.go_to_site()
         page.input_name_text()
         page.input_password_text()
         page.click_button_login()
-        expected = page.get_dashboard_title()
-        assert data.variables.dashboard_text == expected
+        actual = page.get_dashboard_title()
+        assert data.variables.DASHBOARD_TEXT == actual
 
     @allure.description(
         'После ошибки аутентификации поиск текста "Invalid credentials" на странице логина')
     @allure.title('Неуспешный логин')
     def test_failure_login(self, driver):
-        page = LoginPage(driver)
+        page = DashboardPage(driver)
         page.go_to_site()
         page.input_bad_name_text()
         page.input_bad_password_text()
         page.click_button_login()
-        expected = page.get_invalid_credentials()
-        assert data.variables.invalid_credentials_text == expected
+        actual = page.get_invalid_credentials()
+        assert data.variables.INVALID_CREDENTIALS_TEXT == actual
+
+    @allure.description(
+        'Логин в профиль и выход из профиля')
+    @allure.title('Выход из профиля')
+    def test_logout(self, driver):
+        page = DashboardPage(driver)
+        page.go_to_site()
+        page.input_name_text()
+        page.input_password_text()
+        page.click_button_login()
+        page.get_dashboard_title()
+        page.click_profile_properties()
+        page.click_logout()
+        actual = page.get_login_text()
+        assert data.variables.LOGIN_TEXT_MAIN_PAGE == actual
